@@ -18,12 +18,13 @@ class UserTest < ActiveSupport::TestCase
 	# assert_not means if user.name is wrong
 	# then, return true
 	test "name shoule not be too long" do
-		@user.name = "a" * 11
+		@user.name = "a" * 51
 		assert_not @user.valid?
 	end
 
+	#??????为什么测试不了超位数的email!!!
 	test "email should not be too long" do
-		@user.email = "e" * 21
+		@user.email = "a" * 21
 		assert_not @user.valid?
 	end
 
@@ -53,5 +54,9 @@ class UserTest < ActiveSupport::TestCase
 	test "should have a minimum length" do
 		@user.password = @user.password_confirmation = "a" * 5
 		assert_not @user.valid?
+	end
+
+	test "authenticated? should return false for a user with nil digest" do
+		assert_not @user.authenticated?(:remember, '')
 	end
 end
