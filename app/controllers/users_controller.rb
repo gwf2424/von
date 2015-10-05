@@ -21,9 +21,10 @@ class UsersController < ApplicationController
   	if @user.save
       #log_in @user 增加邮件验证之后注释
       # applicationController 已经 include sessionshHelper
-      @user.sent_activation_email
-  		flash[:info] = "Please check your email to activate your account."
-  		#redirect_to @user
+      #@user.sent_activation_email
+  		#flash[:info] = "Please check your email to activate your account."
+  		flash[:info] = "Welcome!"
+      #redirect_to @user
       redirect_to root_url
   	else
   		render 'new'
