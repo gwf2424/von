@@ -20,13 +20,13 @@ class UsersController < ApplicationController
   def create
   	@user = User.new(user_params)
   	if @user.save
-      #log_in @user #20151001 增加邮件验证之后应该注释掉  201512
+      log_in @user #20151001 增加邮件验证之后应该注释掉  201512
       # applicationController 已经 include sessionshHelper
-      @user.sent_activation_email #20151005
-  		flash[:info] = "Please check your email to activate your account." #20151005
-  		#flash[:info] = "Welcome!" #20151005 201512
-      #redirect_to @user #20151005 201512
-      redirect_to root_url #20151005
+      #@user.sent_activation_email #20151005 20160104
+  		#flash[:info] = "Please check your email to activate your account." #20151005 20160104
+  		flash[:info] = "Welcome! Click home to send your microposts!" #20151005 201512
+      redirect_to @user #20151005 201512
+      #redirect_to root_url #20151005 20160104
   	else
   		render 'new'
   	end
