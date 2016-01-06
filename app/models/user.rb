@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 								:reset_token
 
 	has_secure_password
+	has_many :microposts, dependent: :destroy
 
 	#before_save { self.email = email.downcase}
 	#before_save { email.downcase!}
@@ -21,6 +22,12 @@ class User < ActiveRecord::Base
 		uniqueness: { case_sensitive: false}
 
 	validates :password, length: { minimum: 6}, allow_blank: true
+
+	#20160104
+  def feed
+    #microposts
+    Micropost.where("user_id = ?", id)
+  end
 
 	# 在数据库中插入加密后的remember_token
 	def remember

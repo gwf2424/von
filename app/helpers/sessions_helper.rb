@@ -13,6 +13,7 @@ module SessionsHelper
 
 	# 返回 cookies中记忆令牌对应signed的用户
 	# if (user_id = session[:user_id]) 这里是赋值,非比较
+	# 方法返回一个user
 	def current_user
 		if (user_id = session[:user_id])
 			@current_user ||= User.find_by(id: user_id)
