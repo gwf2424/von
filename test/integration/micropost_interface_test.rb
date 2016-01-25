@@ -10,6 +10,7 @@ class MicropostInterfaceTest < ActionDispatch::IntegrationTest
 		log_in_as(@user)
 		get root_path
 		assert_select 'div.pagination'	#element selector
+		assert_select 'input[type=file]'
 
 		#无效提交
 		assert_no_difference 'Micropost.count' do
@@ -19,11 +20,13 @@ class MicropostInterfaceTest < ActionDispatch::IntegrationTest
 
 		#有效提交
 		content = "this is the valid micropost hahahaha"
+		picture = fixture_file_upload('test/fixtures/img_login.png')
 		assert_difference 'Micropost.count', 1 do
-			post microposts_path, micropost: { content: content}
+			post microposts_path, micropost: { content: content, picture: picture}
 		end
 		#assert_equal root_url, root_path #url = www.xxx.com path = /
 		assert_redirected_to root_url
+		assert assigns(:micropost).picture?
 		follow_redirect!
 		assert_match content, response.body
 
