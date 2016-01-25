@@ -20,4 +20,8 @@
 /public/uploads
 
 # Ignore Spring files.
+<<<<<<< HEAD
     /spring/*.pid
+=======
+/spring/*.pid
+>>>>>>> following-users

@@ -5,6 +5,18 @@ class User < ActiveRecord::Base
 
 	has_secure_password
 	has_many :microposts, dependent: :destroy
+	has_many :active_relationships, class_name: "Relationship",
+																	foreign_key: "follower_id",
+																	dependent: :destroy
+
+	has_many :following, through: :active_relationships, source: :followed
+
+	has_many :passive_relationships, class_name: "Relationship",
+																	 foreign_key: "followed_id",
+																	 dependent: :destroy
+
+	has_many :followers, through: :passive_relationships, source: :follower
+	#has_many :followers, through: :passive_relationships可省略source rails会自动followers转follower 搜索follower_id
 
 	#before_save { self.email = email.downcase}
 	#before_save { email.downcase!}
@@ -89,6 +101,19 @@ class User < ActiveRecord::Base
 	#验证密码重设是否超时
 	def password_reset_expired?
 		reset_sent_at < 2.hours.ago		
+	end
+
+	#20160125
+	def follow(other_user)
+		active_relationships.create(followed_id: other_user.id)
+	end
+
+	def unfollow(other_user)
+		active_relationships.find_by(followed_id: other_user.id).destroy
+	end
+
+	def following?(other_user)
+		following.include?(other_user)
 	end
 
 	private

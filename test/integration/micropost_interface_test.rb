@@ -26,7 +26,7 @@ class MicropostInterfaceTest < ActionDispatch::IntegrationTest
 			post microposts_path, micropost: { content: content, picture: picture}
 		end
 		#assert_equal root_url, root_path #url = www.xxx.com path = /
-		assert assigns(:@micropost).picture?
+		assert assigns(:micropost).picture?
 		assert_redirected_to root_url
 		follow_redirect!
 		assert_match content, response.body
@@ -59,4 +59,22 @@ class MicropostInterfaceTest < ActionDispatch::IntegrationTest
 		get root_path
 		assert_match '1 micropost', response.body
 	end
+
+=begin
+	#20160125test11.3
+	test "micropost sidebar count" do
+		log_in_as(@user)
+		get root_path
+		assert_match "#{@user.microposts.count} microposts", response.body
+
+		other_user = users(:gwf3)
+		log_in_as(other_user)
+		get root_path
+		assert_match "0 microposts", response.body
+		other_user.microposts.create!(content: "M")
+		get root_path
+		assert_match "1 micropost", response.body
+	end
+=end
+
 end
