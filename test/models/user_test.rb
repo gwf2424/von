@@ -67,4 +67,15 @@ class UserTest < ActiveSupport::TestCase
 			@user.destroy
 		end
 	end
+
+	test "s follow and unfollow a user" do
+		gwf2 = users(:gwf2)
+		gwf3 = users(:gwf3)
+		assert_not gwf2.following?(gwf3)
+		gwf2.follow(gwf3)
+		assert gwf2.following?(gwf3)
+		#assert gwf3.followers.include?(gwf2)
+		gwf2.unfollow(gwf3)
+		assert_not gwf2.following?(gwf3)
+	end
 end
