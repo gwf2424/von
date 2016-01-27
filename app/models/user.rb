@@ -5,12 +5,16 @@ class User < ActiveRecord::Base
 
 	has_secure_password
 	has_many :microposts, dependent: :destroy
+
+	#我关注的人 通过follower_id获取数组@user.following或者@user.followeds
 	has_many :active_relationships, class_name: "Relationship",
 																	foreign_key: "follower_id",
 																	dependent: :destroy
 
 	has_many :following, through: :active_relationships, source: :followed
+	#通过through 获得relationship表中的followed_id集合,并使用source指定following数组由followed_id组成
 
+	#关注我的人 followed_id是获取数组的关键
 	has_many :passive_relationships, class_name: "Relationship",
 																	 foreign_key: "followed_id",
 																	 dependent: :destroy
