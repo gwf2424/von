@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]#, :show] 20151230 不登陆也可以查看该用户微博
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]#, :show] 20151230 不登陆也可以查看该用户微博
   before_action :correct_user, only: [:edit, :update]#, :show] 20151230 若存在 当前用户访问好友跳转至主页
   before_action :admin_user, only: :destroy
 
@@ -50,6 +50,20 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_url
+  end
+
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'    
   end
 
   private

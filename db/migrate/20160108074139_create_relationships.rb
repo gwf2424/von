@@ -1,8 +1,8 @@
 class CreateRelationships < ActiveRecord::Migration
 	def change
 		create_table :relationships do |t|
-			t.integer :follower_id
-			t.integer :followed_id
+			t.integer :follower_id	#关注
+			t.integer :followed_id	#粉丝
 
 			t.timestamps null: false
 		end
