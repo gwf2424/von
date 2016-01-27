@@ -42,7 +42,10 @@ class User < ActiveRecord::Base
 	#20160104
   def feed
     #microposts
-    Micropost.where("user_id = ?", id)
+    #Micropost.where("user_id in (?) OR user_id = ?", following_ids, id)
+    #20160127
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
   end
 
 	# 在数据库中插入加密后的remember_token

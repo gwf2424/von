@@ -78,4 +78,19 @@ class UserTest < ActiveSupport::TestCase
 		gwf2.unfollow(gwf3)
 		assert_not gwf2.following?(gwf3)
 	end
+
+	test "feed s have the right posts" do
+		gwf2 = users(:gwf2)#gwf2->lana
+		lana = users(:lana)#lana->gwf2
+		archer = users(:archer)#archer->gwf2
+		#gwf2关注lana
+		lana.microposts.each{ |post_following| assert gwf2.feed.include?(post_following)}
+
+		#gwf2自己
+		gwf2.microposts.each{ |post_self| assert gwf2.feed.include?(post_self)}
+
+		#gwf未关注archer
+		archer.microposts.each{ |post_unfollowed| assert_not gwf2.feed.include?(post_unfollowed)}
+
+	end
 end
