@@ -18,4 +18,21 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
 		end
 	end
 
+	test "test of 12.5" do
+		get user_path(@user)
+		following_in_profile = @user.active_relationships.count
+		followers_in_profile = @user.passive_relationships.count
+		#assert_select 'a[href=?]', following_user_path(@user)
+		assert_select 'strong#following', value: following_in_profile
+		assert_select 'strong#follower', value: followers_in_profile
+
+		log_in_as(@user)
+		get root_path
+		#assert_equal 'url', root_url
+		assert_template 'static_pages/home'
+		assert_select 'strong#following', value: following_in_profile
+		assert_select 'strong#follower', value: followers_in_profile
+
+	end
+
 end

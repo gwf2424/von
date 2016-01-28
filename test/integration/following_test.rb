@@ -55,4 +55,12 @@ class FollowingTest < ActionDispatch::IntegrationTest
 		end
 	end
 
+	test "feed on Home Page" do
+		get root_path
+		@user.feed.paginate(page: 1).each do |micropost|
+			assert_match CGI.escapeHTML(micropost.content), response.body
+			#assert_equal micropost, "xxxxxxxxx"
+		end
+	end
+
 end
