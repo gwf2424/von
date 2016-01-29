@@ -6,12 +6,16 @@ class UsersController < ApplicationController
   def index
     #@users = User.all
     #使用分业技术，方法参数由will_pagenate提供
-    @users = User.paginate(page: params[:page])
+    #@users = User.paginate(page: params[:page])
+    #require-16012801
+    @users = User.order("admin desc").order("created_at desc").paginate(page: params[:page])
+    #@users = User.order('created_at desc').paginate(page: params[:page])
   end
 
   def new
   	@user = User.new
   end
+
   def show
   	@user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])

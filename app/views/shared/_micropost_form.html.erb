@@ -6,7 +6,7 @@
 <%= f.submit "Post", class: "btn btn-primary" %>
 <span class="picture">
 	<%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png,image/jpg' %>
-	<%= f.label :name, "delete" %>
+	<%= f.label :clear, id: "path_clean" %>
 </span>
 <% end %>
 
@@ -18,5 +18,9 @@
 			this.value = "";
 			//alert(this.value);
 		}
+	});
+
+	$('#path_clean').click(function(){
+		$('#micropost_picture').val('');
 	});
 </script>

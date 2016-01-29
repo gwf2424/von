@@ -44,7 +44,8 @@ class User < ActiveRecord::Base
     #microposts
     #Micropost.where("user_id in (?) OR user_id = ?", following_ids, id)
     #20160127
-    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    #following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id ORDER BY followed_id DESC"	#获取被关注人的ids
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"	#获取被关注人的ids
     Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
   end
 
