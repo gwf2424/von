@@ -24,7 +24,7 @@ User.create!(name: name,
                    activated_at: Time.zone.now)
 end
 
-Setting.create!(isUserMail: false, isPicMicropost: false)
+Setting.create!(isUseMail: false, isPicMicropost: false)
 
 users = User.order(:created_at).take(6)
 50.times do
