@@ -23,6 +23,11 @@
                         <li class="divider"></li>
                         <li>
                             <%= link_to "Log out", logout_path, method: "delete" %></li>
+                        <li>
+                            <% if current_user.admin %>
+                            <%= link_to "Admin Settings", edit_setting_path(current_setting) %>
+                            <% end %>
+                        </li>
                     </ul>
                 </li>
                 <% else %>

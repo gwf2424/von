@@ -1,0 +1,13 @@
+<div class="col-md-6 col-md-offset-3">
+	<%= form_for(@setting) do |f| %>
+	<%= f.label :isPicMicropost, class: "checkbox inline" do %>
+	<% if @setting.isPicMicropost %>
+	<%= f.check_box :isPicMicropost, checked: 'checked' %>	
+	<% else %>
+	<%= f.check_box :isPicMicropost, checked: 'unchecked' %>
+	<% end %>
+	<span>Use Mail Active</span>
+	<% end %>
+	<%= f.submit "Change settings", class: "btn btn-primary" %>
+	<% end %>
+</div>

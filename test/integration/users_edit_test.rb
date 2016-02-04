@@ -4,12 +4,13 @@ class UsersEditTest < ActionDispatch::IntegrationTest
 
 	def setup
 		@user = users(:gwf2)
+		@setting = settings(:one)
 	end
 
 	test "unsuccessful edit" do
 		log_in_as(@user)
 		get edit_user_path(@user)
-		patch user_path(@user), user: { name: '',
+		patch user_path(@user), user: { name: 'n',
 																		email: 'foo@fal.com',
 																		password: '11111',
 																		password_confirmation: '111111'}
@@ -54,4 +55,5 @@ class UsersEditTest < ActionDispatch::IntegrationTest
 		assert_equal @user.name, name
 		assert_equal @user.email ,email
 	end
+	
 end

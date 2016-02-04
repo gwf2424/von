@@ -28,6 +28,12 @@ module SessionsHelper
 		end
 	end
 
+	def current_setting
+		if @current_user.admin || User.find_by(id: user_id)
+			@current_setting = Setting.first
+		end
+	end
+
 	def logged_in?
 		!current_user.nil?
 	end
