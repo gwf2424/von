@@ -24,6 +24,8 @@ User.create!(name: name,
                    activated_at: Time.zone.now)
 end
 
+Setting.create!(isUserMail: false, isPicMicropost: false)
+
 users = User.order(:created_at).take(6)
 50.times do
   content = Faker::Lorem.sentence(5)
