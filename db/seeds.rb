@@ -41,3 +41,13 @@ following = users[2..50]
 followers = users[3..40]
 following.each{ |followed| user.follow(followed)}
 followers.each{ |follower| follower.follow(user)}
+
+
+Product.delete_all
+
+3.times do |n|
+  title = "Title#{n}"
+  description = "Desc#{n}"
+  image_url = "p#{n}.jpg"
+  Product.create!(title: title, description: description, image_url: image_url, price: price)
+end
