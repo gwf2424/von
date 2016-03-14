@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-  resources :products
-  resources :products
+  #get 'store/index'
+
   get 'password_resets/new'
 
   get 'password_resets/edit'
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :products
   resources :settings, only: [:new, :create, :edit, :update]
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
@@ -28,6 +29,9 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   # get 'static_pages/help'
+
+  get 'store' => 'store#index'
+
   get 'help' => 'static_pages#help'
 
   get 'contact' => 'static_pages#contact'

@@ -7,7 +7,7 @@
 
 <p>
   <strong>Description:</strong>
-  <%= @product.description %>
+  <%= truncate(strip_tags(@product.description), length: 80) %>
 </p>
 
 <p>
