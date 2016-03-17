@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :line_items
   #get 'store/index'
 
   get 'password_resets/new'

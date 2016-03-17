@@ -6,5 +6,8 @@ class Product < ActiveRecord::Base
 																										message: 'must be a URL for GIT, JPG, PNG images.'}
 
 
+  def self.latest
+    Product.order(:updated_at).last
+  end
 	
 end
