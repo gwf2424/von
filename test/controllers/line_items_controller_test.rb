@@ -46,4 +46,8 @@ class LineItemsControllerTest < ActionController::TestCase
 
     assert_redirected_to line_items_path
   end
+
+  test "should add 2 cart" do
+    
+  end
 end

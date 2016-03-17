@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_action :set_date_loaded
+
   include SessionsHelper
 
   private
@@ -12,5 +14,9 @@ class ApplicationController < ActionController::Base
 				flash[:danger] = "Please log in."
 				redirect_to login_url
 			end
+		end
+
+		def set_date_loaded
+			@date_loaded = Time.now.strftime("%I:%M %p/%Y")
 		end
 end

@@ -9,9 +9,10 @@
 		<div class="entry">
 			<%= image_tag(product.image_url) %>
 			<h3><%= product.title %></h3>
-			<%= sanitize(product.description) %>
+			<h3><%= sanitize(product.description) %></h3>
 			<div class="price_line">
-				<span class="price"><%= number_to_currency(product.price) %></span>
+				<span class="price"><%= number_to_currency(product.price, unit: "¥") %></span>
+				<%= button_to 'Add to Cart', line_items_path(product_id: product) %>
 			</div>
 		</div>
 		<% end %>
