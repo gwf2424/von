@@ -1,8 +1,4 @@
-<% if notice %>
-<p id="notice"><%= notice %></p>
-<% end %>
-<p></p>
-<h1>Store#index</h1>
+<h1>Store</h1>
 <% cache ['store', Product.latest] do %>
 	<% @products.each do |product| %>
 	<% cache ['entry', product] do %>
@@ -13,6 +9,7 @@
 			<div class="price_line">
 				<span class="price"><%= number_to_currency(product.price, unit: "¥") %></span>
 				<%= button_to 'Add to Cart', line_items_path(product_id: product) %>
+				<%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %> 
 			</div>
 		</div>
 		<% end %>
