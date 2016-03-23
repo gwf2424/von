@@ -77,7 +77,8 @@ class UsersController < ApplicationController
   private
 
   	def user_params()
-  		params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  		#solve -> Unpermittedparameters:admin?
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
   	end
 
     # 确保用户已登陆,迁移至application controller公用

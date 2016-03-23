@@ -1,4 +1,10 @@
 class SessionsController < ApplicationController
+
+  def delete_count
+    delete_store_counter
+    redirect_to store_url 
+  end
+
   def new
   end
 

@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
 
-  resources :carts
-  resources :line_items
   #get 'store/index'
 
-  get 'password_resets/new'
+  #get 'password_resets/new'
 
-  get 'password_resets/edit'
+  #get 'password_resets/edit'
 
-  get 'sessions/new'
+  #get 'sessions/new'
+
+  post 'sessions/reset' => 'sessions#delete_count'
 
   resources :users do
     member do
@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :carts
+  resources :line_items
   resources :products
   resources :settings, only: [:new, :create, :edit, :update]
   resources :account_activations, only: [:edit]

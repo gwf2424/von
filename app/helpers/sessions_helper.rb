@@ -1,5 +1,9 @@
 module SessionsHelper
 
+	def delete_store_counter
+		session[:store_index_count].nil? ? return : session.delete(:store_index_count)
+	end
+
 	def log_in(user)
 		# 会自动加密user_id
 		session[:user_id] = user.id
