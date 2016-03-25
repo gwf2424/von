@@ -3,6 +3,10 @@ class LineItemsController < ApplicationController
   before_action :set_cart, only: [:create]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
 
+  def delete_this_item
+    
+  end
+
   # GET /line_items
   # GET /line_items.json
   def index
@@ -29,7 +33,7 @@ class LineItemsController < ApplicationController
     product = Product.find(params[:product_id])
     #@line_item = @cart.line_items.build(product: product)
     #@line_item = LineItem.new(line_item_params)
-    @line_item = @cart.add_product(product.id)
+    @line_item = @cart.add_product(product.id, product.price)
 
     respond_to do |format|
       if @line_item.save

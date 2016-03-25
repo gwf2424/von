@@ -2,16 +2,19 @@
 <table>
 	<% @cart.line_items.each do |item| %>
 		<tr>
-			<td><%= item.quantity %> &times;</td>
 			<td><%= item.product.title %></td>
 			<td><%= number_to_currency(item.total_price, unit: 'RMB') %></td>
+			<td><%= button_to '-' %></td>
+			<td><thin> &times;<%= item.quantity %></thin></td>
+			<td><%= button_to '+' %></td>
+			<td><%= button_to 'DELETE', item, method: :delete, data: { confirm: "Your sure?"} %></td>
 		</tr>
 	<% end %>
 
 	<tr>
-		<td colspan="2">Total</td>
+		<td colspan="1">Total</td>
 		<td><%= number_to_currency(@cart.total_price, unit: 'RMB') %></td>
 	</tr>
 </table>
-<%= button_to 'Pay Now', @cart, data: { confirm: 'Are you sure?' } %>
+<%= button_to 'Pay Now', data: { confirm: 'Are you sure?' } %>
 <%= button_to 'Empty Cart', @cart, method: :delete, data: { confirm: 'Are you sure?' } %>

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   post 'sessions/reset' => 'sessions#delete_count'
 
+  post 'line_items/delete' => 'line_items#delete_this_item'
+
   resources :users do
     member do
       get :following, :followers
