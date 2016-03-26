@@ -10,7 +10,13 @@ Rails.application.routes.draw do
 
   post 'sessions/reset' => 'sessions#delete_count'
 
-  post 'line_items/delete' => 'line_items#delete_this_item'
+  patch 'line_items/quantity' => 'line_items#change_quantity'
+
+  match '/line_items/minus_quantity/:id' => 'line_items#minus_quantity', :as => 'minus_quantity', via: :all
+
+  match '/line_items/add_quantity/:id' => 'line_items#add_quantity', :as => 'add_quantity', via: :all
+
+  #post 'line_items/quantity2' => 'line_items#change_quantity'
 
   resources :users do
     member do

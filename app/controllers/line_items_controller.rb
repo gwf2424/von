@@ -1,10 +1,11 @@
 class LineItemsController < ApplicationController
   #set_cart为concern中
   before_action :set_cart, only: [:create]
-  before_action :set_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_line_item, only: [:show, :edit, :update, :destroy, :add_quantity, :minus_quantity]
+  protect_from_forgery except: [:create]
 
   def delete_this_item
-    
+
   end
 
   # GET /line_items
@@ -64,11 +65,40 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
+    @line_item = LineItem.find(params[:id])
     @line_item.destroy
     respond_to do |format|
-      format.html { redirect_to line_items_url, notice: 'Line item was successfully destroyed.' }
-      format.json { head :no_content }
+      #format.html { redirect_to line_items_url, notice: 'Line item was destroyed.' }
+      format.html { redirect_to @line_item.cart, notice: 'Line item was destroyed.' }
+      format.json { head :ok }
     end
+  end
+
+  def change_quantity
+    @line_item = LineItem.find(params[:id])
+    if @line_item.quantity > 1
+      @line_item.update_attributes(quantity: @line_item.quantity - 1)
+    else
+      @line_item.destroy
+      respond_to do |format|
+        format.html { redirect_to store_url, notice: 'Cart was empty!'}
+      end
+    end
+  end
+
+  def add_quantity
+    @line_item.update_attributes(quantity: @line_item.quantity + 1)
+    redirect_to @line_item.cart
+  end
+
+  def minus_quantity
+    #debugger
+    if @line_item.quantity == 1
+      @line_item.destroy
+    else 
+      @line_item.update_attributes(quantity: @line_item.quantity - 1)
+    end
+    redirect_to @line_item.cart
   end
 
   private
@@ -81,4 +111,4 @@ class LineItemsController < ApplicationController
     def line_item_params
       params.require(:line_item).permit(:product_id, :cart_id)
     end
-end
+  end
