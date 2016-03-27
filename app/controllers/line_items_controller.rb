@@ -38,8 +38,10 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart }
+        format.html { redirect_to store_url }
+        ##format.html { redirect_to @line_item.cart }
         #format.html { redirect_to @line_item, notice: 'Line item was successfully created.' }
+        format.js
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
@@ -88,7 +90,11 @@ class LineItemsController < ApplicationController
 
   def add_quantity
     @line_item.update_attributes(quantity: @line_item.quantity + 1)
-    redirect_to @line_item.cart
+    #redirect_to store_url #@line_item.cart
+    respond_to do |format|
+      format.html { redirect_to store_url }
+      format.js
+    end
   end
 
   def minus_quantity
@@ -98,7 +104,11 @@ class LineItemsController < ApplicationController
     else 
       @line_item.update_attributes(quantity: @line_item.quantity - 1)
     end
-    redirect_to @line_item.cart
+    #redirect_to store_url #@line_item.cart    
+    respond_to do |format|
+      format.html { redirect_to store_url }
+      format.js
+    end
   end
 
   private

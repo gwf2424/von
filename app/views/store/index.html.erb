@@ -1,23 +1,38 @@
 <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %><h1>Store<%= session[:cart_id] %></h1>
-<div>
-	<p><%= pluralize session[:store_index_count], 'time' %></p>
-	<%= button_to 'Delete session', sessions_reset_path %>
-</div>
-<br/>
 
-<% cache ['store', Product.latest] do %>
-	<% @products.each do |product| %>
-	<% cache ['entry', product] do %>
-		<div class="entry">
-			<%= image_tag(product.image_url) %>
-			<h3><%= product.title %></h3>
-			<h3><%= sanitize(product.description) %></h3>
-			<div class="price_line">
-				<span class="price"><%= number_to_currency(product.price, unit: "¥") %></span>
-				<%= button_to 'Add to Cart', line_items_path(product_id: product) %>
-				
+<div class="row">
+	<aside class="col-md-4">
+		<section>
+			<div>
+				<p><%= pluralize session[:store_index_count], 'time' %></p>
+				<%= button_to 'Delete session', sessions_reset_path %>
 			</div>
-		</div>
-		<% end %>
-	<% end %>
-<% end %>
+			<br/>
+			<div id="cart">
+				<%= render @cart %>
+			</div>
+		</section>
+	</aside>
+
+	<aside>
+		<section>
+			<% cache ['store', Product.latest] do %>
+				<% @products.each do |product| %>
+				<% cache ['entry', product] do %>
+					<div class="entry">
+						<%= image_tag(product.image_url) %>
+						<h3><%= product.title %></h3>
+						<h3><%= sanitize(product.description) %></h3>
+						<div class="price_line">
+							<span class="price"><%= number_to_currency(product.price, unit: "¥") %></span>
+							<%= button_to 'Add to Cart', line_items_path(product_id: product), remote: true %>
+						</div>
+					</div>
+					<% end %>
+				<% end %>
+			<% end %>
+		</section>
+	</aside>
+</div>
+
+			
