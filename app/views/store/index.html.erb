@@ -8,9 +8,9 @@
 				<%= button_to 'Delete session', sessions_reset_path %>
 			</div>
 			<br/>
-			<div id="cart">
+			<%= hidden_div_if(@cart.line_items.empty?, id: 'cart') do %>
 				<%= render @cart %>
-			</div>
+			<% end %>
 		</section>
 	</aside>
 

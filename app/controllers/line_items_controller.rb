@@ -41,7 +41,7 @@ class LineItemsController < ApplicationController
         format.html { redirect_to store_url }
         ##format.html { redirect_to @line_item.cart }
         #format.html { redirect_to @line_item, notice: 'Line item was successfully created.' }
-        format.js
+        format.js { @current_item_id = @line_item.id }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
@@ -71,20 +71,8 @@ class LineItemsController < ApplicationController
     @line_item.destroy
     respond_to do |format|
       #format.html { redirect_to line_items_url, notice: 'Line item was destroyed.' }
-      format.html { redirect_to @line_item.cart, notice: 'Line item was destroyed.' }
+      format.html { redirect_to store_url, notice: 'Line item was destroyed.' }
       format.json { head :ok }
-    end
-  end
-
-  def change_quantity
-    @line_item = LineItem.find(params[:id])
-    if @line_item.quantity > 1
-      @line_item.update_attributes(quantity: @line_item.quantity - 1)
-    else
-      @line_item.destroy
-      respond_to do |format|
-        format.html { redirect_to store_url, notice: 'Cart was empty!'}
-      end
     end
   end
 
@@ -93,21 +81,21 @@ class LineItemsController < ApplicationController
     #redirect_to store_url #@line_item.cart
     respond_to do |format|
       format.html { redirect_to store_url }
-      format.js
+      format.js { @current_item_id = @line_item.id }
     end
   end
 
   def minus_quantity
     #debugger
-    if @line_item.quantity == 1
-      @line_item.destroy
-    else 
+    if @line_item.quantity > 1
       @line_item.update_attributes(quantity: @line_item.quantity - 1)
     end
     #redirect_to store_url #@line_item.cart    
     respond_to do |format|
       format.html { redirect_to store_url }
-      format.js
+      format.js do
+        @current_item_id = @line_item.id
+      end
     end
   end
 

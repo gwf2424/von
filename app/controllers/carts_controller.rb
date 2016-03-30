@@ -73,7 +73,7 @@ class CartsController < ApplicationController
     #LineItem.where(cart_id: @cart.id).destroy(0)
     session[:cart_id] = nil
     respond_to do |format|
-      format.html { redirect_to store_url, notice: 'Cart was empty' }
+      format.html { redirect_to store_url}#, notice: 'Cart was empty' }
       format.json { head :no_content }
     end
   end

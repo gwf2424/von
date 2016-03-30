@@ -1,9 +1,13 @@
-<tr>
-	<td><%= line_item.product.title %></td>
-	<td id="value_<%= line_item.id %>"><%= number_to_currency(line_item.total_price, unit: 'RMB') %></td>
-	<td><%= button_to '-', minus_quantity_path(line_item), class: "btn btn-primary", remote: true %></td>
-	<td><thin id="quantity_<%= line_item.id %>"> &times;<%= line_item.quantity %></thin></td>
-	<td><%= button_to '+', add_quantity_path(line_item), class: "btn btn-primary", remote: true %></td>
-	<td>&nbsp</td>
-	<td><%= button_to 'DELETE', line_item, class: "btn btn-primary", method: :delete, data: { confirm: "Your sure?"} %></td>
-</tr>
+<% if line_item.id == @current_item_id %>
+	<tr id="current_item">
+<% else %>
+	<tr>
+<% end %>
+		<td><%= line_item.product.title %></td>
+		<td id="value_<%= line_item.id %>"><%= number_to_currency(line_item.total_price, unit: 'RMB') %></td>
+		<td><%= button_to '-', minus_quantity_path(line_item), class: "btn btn-primary", remote: true %></td>
+		<td><thin id="quantity_<%= line_item.id %>"> &times;<%= line_item.quantity %></thin></td>
+		<td><%= button_to '+', add_quantity_path(line_item), class: "btn btn-primary", remote: true %></td>
+		<td>&nbsp</td>
+		<td><%= button_to 'DELETE', line_item, class: "btn btn-primary", method: :delete, data: { confirm: "Your sure?"} %></td>
+	</tr>

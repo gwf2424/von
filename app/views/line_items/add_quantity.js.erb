@@ -1,3 +1,5 @@
 $("#quantity_<%= @line_item.id %>").html(" &times;<%= @line_item.quantity %>")
 $("#value_<%= @line_item.id %>").html("<%= number_to_currency(@line_item.total_price, unit: 'RMB') %>")
 $("#total_<%= @line_item.cart_id %>").html("<%= number_to_currency(@line_item.cart.total_price, unit: 'RMB') %>")
+$('#current_item').css({'background-color':'#88ff88'})
+	.animate({'background-color':'#FFFFFF'}, 1000);

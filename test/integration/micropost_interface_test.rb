@@ -9,6 +9,7 @@ class MicropostInterfaceTest < ActionDispatch::IntegrationTest
 	test "micropost interface test" do
 		log_in_as(@user)
 		get root_path
+		assigns(:setting).isPicMicropost = true
 		assert_select 'div.pagination'	#element selector
 		assert_select 'input[type="file"]'
 

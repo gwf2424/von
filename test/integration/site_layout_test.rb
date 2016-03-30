@@ -9,7 +9,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
 	test "layout links" do
 		get root_path
 		assert_template 'static_pages/home'
-		assert_select "a[href=?]", root_path, count: 2
+		assert_select "a[href=?]", root_path, count: 3
 		assert_select "a[href=?]", help_path
 		assert_select "a[href=?]", about_path
 		assert_select "a[href=?]", contact_path
@@ -20,7 +20,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
 	test "layout before logged" do
 		get root_path
 		assert_template 'static_pages/home'
-		assert_select 'a', count: 12
+		assert_select 'a', count: 14
 		assert_nil session[:forwarding_url]
 		assert_nil cookies['remember_token']
 	end
