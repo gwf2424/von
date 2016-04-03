@@ -1,6 +1,6 @@
 class LineItemsController < ApplicationController
   #set_cart为concern中
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: [:create, :add_quantity, :minus_quantity]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy, :add_quantity, :minus_quantity]
   protect_from_forgery except: [:create]
 
@@ -77,29 +77,34 @@ class LineItemsController < ApplicationController
   end
 
   def add_quantity
-    @line_item.update_attributes(quantity: @line_item.quantity + 1)
+    #@cart = current_cart
+    @line_item = @cart.add_quantity(params[:id])
+    #@line_item.update_attributes(quantity: @line_item.quantity + 1)
     #redirect_to store_url #@line_item.cart
-    respond_to do |format|
-      format.html { redirect_to store_url }
-      format.js { @current_item_id = @line_item.id }
+    if @line_item.save
+      respond_to do |format|
+        format.html { redirect_to store_url }
+        format.js { @current_item_id = @line_item.id }
+      end
     end
   end
 
   def minus_quantity
-    #debugger
-    if @line_item.quantity > 1
-      @line_item.update_attributes(quantity: @line_item.quantity - 1)
-    end
+    #@cart = current_cart
+    @line_item = @cart.minus_quantity(params[:id])
     #redirect_to store_url #@line_item.cart    
-    respond_to do |format|
-      format.html { redirect_to store_url }
-      format.js do
-        @current_item_id = @line_item.id
+    if @line_item.save
+      respond_to do |format|
+        format.html { redirect_to store_url }
+        format.js do
+          @current_item_id = @line_item.id
+        end
       end
     end
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_line_item
       @line_item = LineItem.find(params[:id])

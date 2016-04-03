@@ -16,6 +16,14 @@ Rails.application.routes.draw do
 
   match '/line_items/add_quantity/:id' => 'line_items#add_quantity', :as => 'add_quantity', via: :all
 
+  #resources :line_items do
+  #  member do
+  #    put 'xction'
+  #  end
+  #  put 'xction', on: :member
+  #end
+  #xction_line_item_path(line_item), method: :put
+
   #post 'line_items/quantity2' => 'line_items#change_quantity'
 
   resources :users do
